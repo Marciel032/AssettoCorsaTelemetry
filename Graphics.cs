@@ -168,18 +168,20 @@ namespace ACCSharedMemory
         public int rainTyres;
         public int sessionIndex;
         public float usedFuel;
-        [MarshalAs (UnmanagedType.ByValArray, SizeConst = 15)]
-        public string deltaLapTime;
+
+        [MarshalAs(UnmanagedType.ByValTStr, SizeConst = 15)]
+        public String deltaLapTime;
         public int iDeltaLapTime;
-        [MarshalAs (UnmanagedType.ByValArray, SizeConst = 15)]
-        public string estimatedLapTime;
+        [MarshalAs (UnmanagedType.ByValTStr, SizeConst = 15)]
+        public String estimatedLapTime;
+        
         public int iEstimatedLapTime;
         public int isDeltaPositive;
         public int iSplit;
         public int isValidLap;
         public float fuelEstimatedLaps;
-        [MarshalAs (UnmanagedType.ByValArray, SizeConst = 33)]
-        public string trackStatus;
+        [MarshalAs (UnmanagedType.ByValTStr, SizeConst = 33)]
+        public String trackStatus;
         public int missingMandatoryPits;
         public float Clock;
         public int directionLightsLeft;
@@ -206,5 +208,7 @@ namespace ACCSharedMemory
         public int strategyTyreSet;
         public int gapAhead;
         public int gapBehind;
+        
+
     }
 }
