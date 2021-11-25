@@ -9,24 +9,24 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 
-namespace AssettoCorsaSharedMemory
+namespace ACCSharedMemory
 {
     public delegate void PhysicsUpdatedHandler(object sender, PhysicsEventArgs e);
     public delegate void GraphicsUpdatedHandler(object sender, GraphicsEventArgs e);
     public delegate void StaticInfoUpdatedHandler(object sender, StaticInfoEventArgs e);
     public delegate void GameStatusChangedHandler(object sender, GameStatusEventArgs e);
 
-    public class AssettoCorsaNotStartedException : Exception
+    public class ACCNotStartedException : Exception
     {
-        public AssettoCorsaNotStartedException()
-            : base("Shared Memory not connected, is Assetto Corsa running and have you run assettoCorsa.Start()?")
+        public ACCNotStartedException()
+            : base("Shared Memory not connected, is Assetto Corsa Competizione running and have you run ACC.Start()?")
         {
         }
     }
 
     enum AC_MEMORY_STATUS { DISCONNECTED, CONNECTING, CONNECTED }
 
-    public class AssettoCorsa
+    public class ACC
     {
         private Timer sharedMemoryRetryTimer;
         private AC_MEMORY_STATUS memoryStatus = AC_MEMORY_STATUS.DISCONNECTED;
@@ -51,7 +51,7 @@ namespace AssettoCorsaSharedMemory
             { AC_STATUS.AC_REPLAY, "Replay" },
         };
 
-        public AssettoCorsa()
+        public ACC()
         {
             sharedMemoryRetryTimer = new Timer(2000);
             sharedMemoryRetryTimer.AutoReset = true;
