@@ -39,7 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssettoCorsa.cs" />
+    <Compile Include="ACC.cs" />
     <Compile Include="GameStatusEventArgs.cs" />
     <Compile Include="Graphics.cs" />
     <Compile Include="Physics.cs" />
