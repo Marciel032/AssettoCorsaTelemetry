@@ -137,7 +137,7 @@ namespace ACCSharedMemory
         public int[] carID;
         public int playerCarID;
         public float PenaltyTime;
-        public AC_FLAG_TYPE Flag;
+        public ACC_FLAG_TYPE Flag;
         public ACC_PENALTY_TYPE penalty;
         public int IdealLineOn;
 
