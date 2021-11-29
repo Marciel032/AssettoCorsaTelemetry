@@ -75,6 +75,20 @@ namespace ACCSharedMemory
             Stop();
         }
 
+        public float[,] TranslateCarCoordinates (float[] carCoordinates)
+        {
+            float[,] retArray = new float[60,3];
+
+            for(int i=2; i<carCoordinates.Length ; i = i+3)
+            {
+                retArray[i/3, 0] = carCoordinates[i-2];
+                retArray[i/3, 1] = carCoordinates[i-1];
+                retArray[i/3, 2] = carCoordinates[i];
+            }
+
+            return retArray;
+        }
+
         /// <summary>
         /// Connect to the shared memory and start the update timers
         /// </summary>

@@ -131,7 +131,7 @@ namespace ACCSharedMemory
         public float ReplayTimeMultiplier;
         public float NormalizedCarPosition;
         public int activeCars;
-        [MarshalAs (UnmanagedType.ByValArray, SizeConst = 3)]
+        [MarshalAs (UnmanagedType.ByValArray, SizeConst = 180)]
         public float[] CarCoordinates;
         [MarshalAs (UnmanagedType.ByValArray, SizeConst = 60)]
         public int[] carID;
@@ -176,7 +176,7 @@ namespace ACCSharedMemory
         public String estimatedLapTime;
         
         public int iEstimatedLapTime;
-        public int isDeltaPositive;
+        public int isDeltaPositive; 
         public int iSplit;
         public int isValidLap;
         public float fuelEstimatedLaps;
