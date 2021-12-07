@@ -35,8 +35,8 @@ Use the demo project to more reference.
 
 ## 💾 Games suported
 
-* Assetto Corsa Competizione - from main branch
-* Assetto Corsa - from branch "AssettoCorsa"
+* Assetto Corsa Competizione - from [AssettoCorsaCompetizione](https://github.com/Marciel032/AssettoCorsaTelemetry) branch
+* Assetto Corsa - from [AssettoCorsa](https://github.com/Marciel032/AssettoCorsaTelemetry/tree/AssettoCorsa) branch
 
 
 ## 📫 Contributing to the project
