@@ -31,6 +31,8 @@ private void TelemetryReader_OnTelemetryRead(AssettoCorsaTelemetry telemetry)
 }
 ```
 
+Use the demo project to more reference.
+
 ## 💾 Games suported
 
 * Assetto Corsa Competizione - from main branch
