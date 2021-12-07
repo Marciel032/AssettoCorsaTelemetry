@@ -1,71 +1,89 @@
-Assetto Corsa Shared Memory Library
-===================================
+# Assetto Corsa Telemetry
 
-Assetto Corsa Shared Memory library written in C# to access live game data
+![GitHub code size](https://img.shields.io/github/languages/code-size/marciel032/AssettoCorsaTelemetry?style=for-the-badge)
+![GitHub forks](https://img.shields.io/github/forks/marciel032/AssettoCorsaTelemetry?style=for-the-badge)
+![GitHub pull requests](https://img.shields.io/github/issues-pr-raw/marciel032/AssettoCorsaTelemetry?style=for-the-badge)
+![GitHub closed pull requests](https://img.shields.io/github/issues-pr-closed-raw/marciel032/AssettoCorsaTelemetry?style=for-the-badge)
+![GitHub contributors](https://img.shields.io/github/contributors/marciel032/AssettoCorsaTelemetry?style=for-the-badge)
 
-The code was built around the shared memory structures described here on the official Assetto Corsa forum:
-http://www.assettocorsa.net/forum/index.php?threads/shared-memory-reference.3352/
+
+> This project allows reading data from assetto corsa and assetto corsa competizione
 
 
-class: AssettoCorsa
--------------------
+## 💻 Prerequisites
 
-This is the centerpiece of the library. Using this you can add your own event listeners to trigger for updates.
+Before starting, make sure you have met the following requirements:
+* Use Visual studio 2019 to compile the Demo.
 
-There are three events to listen for:
+## ☕ Using
 
-* AssettoCorsa.StaticInfoUpdated
-* AssettoCorsa.GraphicsUpdated
-* AssettoCorsa.PhysicsUpdated
-
-These events have individual timers and their respective update intervals can be changed to fit your own needs. Timers will not be running if an event has no listeners.
-
-The default update intervals are:
-
-```
-AssettoCorsa.SharedInfoInterval: 3000 ms
-AssettoCorsa.GraphicsInterval: 10000 ms
-AssettoCorsa.PhysicsInterval: 10 ms
+Start the telemetry reader
+```csharp
+telemetryReader = new AssettoCorsaTelemetryReader();
+telemetryReader.OnTelemetryRead += TelemetryReader_OnTelemetryRead;
 ```
 
-The `AssettoCorsa.Start()` and `AssettoCorsa.Stop()` functions are to connect and disconnect from the shared memory and also to start and stop the timers for the events. After you've executed `Start()` you can use `IsRunning` to check if it successfully connected to the shared memory.
-
-Usage Example
--------------
-
-In Visual Studio you have two easy options:
-
-1. Add the AssettoCorsaSharedMemory.dll as a reference to your project
-2. Add the complete AssettoCorsaSharedMemory project to your solution and then add it as a reference
-
-Here is some example code to read the StaticInfo and output it to the console:
-
-```c#
-using AssettoCorsaSharedMemory;
-using System;
-
-namespace ConsoleApplication1
+The event OnTelemetryRead is called on new information is writed
+```csharp
+private void TelemetryReader_OnTelemetryRead(AssettoCorsaTelemetry telemetry)
 {
-    class Program
-    {
-        static void Main(string[] args)
-        {
-            AssettoCorsa ac = new AssettoCorsa();
-            ac.StaticInfoInterval = 5000; // Get StaticInfo updates ever 5 seconds
-            ac.StaticInfoUpdated += ac_StaticInfoUpdated; // Add event listener for StaticInfo
-            ac.Start(); // Connect to shared memory and start interval timers 
-
-            Console.ReadKey();
-        }
-
-        static void ac_StaticInfoUpdated(object sender, StaticInfoEventArgs e)
-        {
-            // Print out some data from StaticInfo
-            Console.WriteLine("StaticInfo");
-            Console.WriteLine("  Car Model: " + e.StaticInfo.CarModel);
-            Console.WriteLine("  Track:     " + e.StaticInfo.Track);
-            Console.WriteLine("  Max RPM:   " + e.StaticInfo.MaxRpm);
-        }
-    }
+    ...
 }
 ```
+
+## 💾 Games suported
+
+* Assetto Corsa Competizione - from main branch
+* Assetto Corsa - from branch "AssettoCorsa"
+
+
+## 📫 Contributing to the project
+To contribute, follow these steps:
+
+1. Fork this repository.
+2. Create a branch.
+3. Make your changes and commit them.
+4. Send to original branch.
+5. Create the pull request.
+
+Alternatively, see the GitHub documentation at [how to create a pull request](https://help.github.com/en/github/collaborating-with-issues-and-pull-requests/creating-a-pull-request).
+
+
+## 🤝 Colaboradores
+
+We thank the following people who contributed to this project:
+
+<table>
+  <tr>
+    <td align="center">
+      <a href="https://github.com/Marciel032">
+        <img src="https://avatars3.githubusercontent.com/Marciel032" width="100px;" alt="Marciel Grützmann"/><br>
+        <sub>
+          <b>Marciel Grützmann</b>
+        </sub>
+      </a>
+    </td>   
+    <td align="center">
+      <a href="https://github.com/mdjarv">
+        <img src="https://avatars3.githubusercontent.com/mdjarv" width="100px;" alt="Mathias Djärv"/><br>
+        <sub>
+          <b>Mathias Djärv</b>
+        </sub>
+      </a>
+    </td>
+    <td align="center">
+      <a href="https://github.com/donald-42">
+        <img src="https://avatars3.githubusercontent.com/donald-42" width="100px;" alt="donald-42"/><br>
+        <sub>
+          <b>donald-42</b>
+        </sub>
+      </a>
+    </td>
+  </tr>
+</table>
+
+## 📘 References 
+#### [AC docs](https://www.assettocorsa.net/forum/index.php?threads/shared-memory-reference-25-05-2017.3352/)
+#### [ACC docs](https://www.assettocorsa.net/forum/index.php?threads/acc-shared-memory-documentation.59965/)
+#### [Original Assetto Corsa project from mdjarv](https://github.com/mdjarv/assettocorsasharedmemory)
+#### [Original Assetto Corsa Competizione project from donald-42](https://github.com/donald-42/ACCsharedmemory)
