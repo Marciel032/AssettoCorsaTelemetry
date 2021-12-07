@@ -38,7 +38,7 @@ namespace AssettoCorsaSharedMemory
         AC_DRAG = 6
     }
 
-    public class GraphicsEventArgs : EventArgs
+    internal class GraphicsEventArgs : EventArgs
     {
         public GraphicsEventArgs (Graphics graphics)
         {

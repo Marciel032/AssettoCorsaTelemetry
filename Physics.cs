@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace AssettoCorsaSharedMemory
 {
-    public class PhysicsEventArgs : EventArgs
+    internal class PhysicsEventArgs : EventArgs
     {
         public PhysicsEventArgs (Physics physics)
         {

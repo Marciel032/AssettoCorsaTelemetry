@@ -5,7 +5,7 @@ using System.Text;
 
 namespace AssettoCorsaSharedMemory
 {
-    public class GameStatusEventArgs : EventArgs
+    internal class GameStatusEventArgs : EventArgs
     {
         public AC_STATUS GameStatus {get; private set;}
 
