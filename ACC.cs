@@ -20,15 +20,15 @@ namespace ACCSharedMemory
         }
     }
 
-    enum AC_MEMORY_STATUS { DISCONNECTED, CONNECTING, CONNECTED }
+    enum MEMORY_STATUS { DISCONNECTED, CONNECTING, CONNECTED }
 
     internal class ACC
     {
         private Timer sharedMemoryRetryTimer;
-        private AC_MEMORY_STATUS memoryStatus = AC_MEMORY_STATUS.DISCONNECTED;
-        public bool IsRunning { get { return (memoryStatus == AC_MEMORY_STATUS.CONNECTED); } }
+        private MEMORY_STATUS memoryStatus = MEMORY_STATUS.DISCONNECTED;
+        public bool IsRunning { get { return (memoryStatus == MEMORY_STATUS.CONNECTED); } }
 
-        private ACC_STATUS gameStatus = ACC_STATUS.ACC_OFF;
+        private STATUS gameStatus = STATUS.OFF;
 
         public event GameStatusChangedHandler GameStatusChanged;
         public virtual void OnGameStatusChanged(GameStatusEventArgs e)
@@ -39,12 +39,12 @@ namespace ACCSharedMemory
             }
         }
 
-        public static readonly Dictionary<ACC_STATUS, string> StatusNameLookup = new Dictionary<ACC_STATUS, string>
+        public static readonly Dictionary<STATUS, string> StatusNameLookup = new Dictionary<STATUS, string>
         {
-            { ACC_STATUS.ACC_OFF, "Off" },
-            { ACC_STATUS.ACC_LIVE, "Live" },
-            { ACC_STATUS.ACC_PAUSE, "Pause" },
-            { ACC_STATUS.ACC_REPLAY, "Replay" },
+            { STATUS.OFF, "Off" },
+            { STATUS.LIVE, "Live" },
+            { STATUS.PAUSE, "Pause" },
+            { STATUS.REPLAY, "Replay" },
         };
 
         public ACC()
@@ -102,7 +102,7 @@ namespace ACCSharedMemory
         {
             try
             {
-                memoryStatus = AC_MEMORY_STATUS.CONNECTING;
+                memoryStatus = MEMORY_STATUS.CONNECTING;
                 // Connect to shared memory
                 physicsMMF = MemoryMappedFile.OpenExisting("Local\\acpmf_physics");
                 graphicsMMF = MemoryMappedFile.OpenExisting("Local\\acpmf_graphics");
@@ -120,7 +120,7 @@ namespace ACCSharedMemory
 
                 // Stop retry timer
                 sharedMemoryRetryTimer.Stop();
-                memoryStatus = AC_MEMORY_STATUS.CONNECTED;
+                memoryStatus = MEMORY_STATUS.CONNECTED;
                 return true;
             }
             catch (FileNotFoundException)
@@ -137,7 +137,7 @@ namespace ACCSharedMemory
         /// </summary>
         public void Stop()
         {
-            memoryStatus = AC_MEMORY_STATUS.DISCONNECTED;
+            memoryStatus = MEMORY_STATUS.DISCONNECTED;
             sharedMemoryRetryTimer.Stop();
 
             // Stop the timers
@@ -260,7 +260,7 @@ namespace ACCSharedMemory
 
         private void ProcessPhysics()
         {
-            if (memoryStatus == AC_MEMORY_STATUS.DISCONNECTED)
+            if (memoryStatus == MEMORY_STATUS.DISCONNECTED)
                 return;
 
             try
@@ -274,7 +274,7 @@ namespace ACCSharedMemory
 
         private void ProcessGraphics()
         {
-            if (memoryStatus == AC_MEMORY_STATUS.DISCONNECTED)
+            if (memoryStatus == MEMORY_STATUS.DISCONNECTED)
                 return;
 
             try
@@ -288,7 +288,7 @@ namespace ACCSharedMemory
 
         private void ProcessStaticInfo()
         {
-            if (memoryStatus == AC_MEMORY_STATUS.DISCONNECTED)
+            if (memoryStatus == MEMORY_STATUS.DISCONNECTED)
                 return;
 
             try
@@ -306,7 +306,7 @@ namespace ACCSharedMemory
         /// <returns>A Physics object representing the current status, or null if not available</returns>
         public Physics ReadPhysics()
         {
-            if (memoryStatus == AC_MEMORY_STATUS.DISCONNECTED || physicsMMF == null)
+            if (memoryStatus == MEMORY_STATUS.DISCONNECTED || physicsMMF == null)
                 throw new ACCNotStartedException();
 
             using (var stream = physicsMMF.CreateViewStream())
@@ -325,7 +325,7 @@ namespace ACCSharedMemory
 
         public Graphics ReadGraphics()
         {
-            if (memoryStatus == AC_MEMORY_STATUS.DISCONNECTED || graphicsMMF == null)
+            if (memoryStatus == MEMORY_STATUS.DISCONNECTED || graphicsMMF == null)
                 throw new ACCNotStartedException();
 
             using (var stream = graphicsMMF.CreateViewStream())
@@ -344,7 +344,7 @@ namespace ACCSharedMemory
 
         public StaticInfo ReadStaticInfo()
         {
-            if (memoryStatus == AC_MEMORY_STATUS.DISCONNECTED || staticInfoMMF == null)
+            if (memoryStatus == MEMORY_STATUS.DISCONNECTED || staticInfoMMF == null)
                 throw new ACCNotStartedException();
 
             using (var stream = staticInfoMMF.CreateViewStream())

@@ -7,9 +7,9 @@ namespace ACCSharedMemory
 {
     internal class GameStatusEventArgs : EventArgs
     {
-        public ACC_STATUS GameStatus {get; private set;}
+        public STATUS GameStatus {get; private set;}
 
-        public GameStatusEventArgs(ACC_STATUS status)
+        public GameStatusEventArgs(STATUS status)
         {
             GameStatus = status;
         }
