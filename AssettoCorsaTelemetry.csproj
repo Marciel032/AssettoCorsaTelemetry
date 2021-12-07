@@ -42,7 +42,7 @@
   <ItemGroup>
     <Compile Include="AssettoCorsaTelemetry.cs" />
     <Compile Include="AssettoCorsaTelemetryReader.cs" />
-    <Compile Include="AssettoCorsa.cs" />
+    <Compile Include="AC.cs" />
     <Compile Include="GameStatusEventArgs.cs" />
     <Compile Include="Graphics.cs" />
     <Compile Include="Physics.cs" />

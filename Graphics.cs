@@ -1,41 +1,37 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AssettoCorsaSharedMemory
 {
-    public enum AC_FLAG_TYPE
+    public enum FLAG_TYPE
     {
-        AC_NO_FLAG = 0,
-        AC_BLUE_FLAG = 1,
-        AC_YELLOW_FLAG = 2,
-        AC_BLACK_FLAG = 3,
-        AC_WHITE_FLAG = 4,
-        AC_CHECKERED_FLAG = 5,
-        AC_PENALTY_FLAG = 6
+        NO_FLAG = 0,
+        BLUE_FLAG = 1,
+        YELLOW_FLAG = 2,
+        BLACK_FLAG = 3,
+        WHITE_FLAG = 4,
+        CHECKERED_FLAG = 5,
+        PENALTY_FLAG = 6
     }
 
-    public enum AC_STATUS
+    public enum STATUS
     {
-        AC_OFF = 0,
-        AC_REPLAY = 1,
-        AC_LIVE = 2,
-        AC_PAUSE = 3
+        OFF = 0,
+        REPLAY = 1,
+        LIVE = 2,
+        PAUSE = 3
     }
 
-    public enum AC_SESSION_TYPE
+    public enum SESSION_TYPE
     {
-        AC_UNKNOWN = -1,
-        AC_PRACTICE = 0,
-        AC_QUALIFY = 1,
-        AC_RACE = 2,
-        AC_HOTLAP = 3,
-        AC_TIME_ATTACK = 4,
-        AC_DRIFT = 5,
-        AC_DRAG = 6
+        UNKNOWN = -1,
+        PRACTICE = 0,
+        QUALIFY = 1,
+        RACE = 2,
+        HOTLAP = 3,
+        TIME_ATTACK = 4,
+        DRIFT = 5,
+        DRAG = 6
     }
 
     internal class GraphicsEventArgs : EventArgs
@@ -53,8 +49,8 @@ namespace AssettoCorsaSharedMemory
     public struct Graphics
     {
         public int PacketId;
-        public AC_STATUS Status;
-        public AC_SESSION_TYPE Session;
+        public STATUS Status;
+        public SESSION_TYPE Session;
         [MarshalAs (UnmanagedType.ByValTStr, SizeConst = 15)]
         public String CurrentTime;
         [MarshalAs (UnmanagedType.ByValTStr, SizeConst = 15)]
@@ -83,7 +79,7 @@ namespace AssettoCorsaSharedMemory
         public float[] CarCoordinates;
 
         public float PenaltyTime;
-        public AC_FLAG_TYPE Flag;
+        public FLAG_TYPE Flag;
         public int IdealLineOn;
 
         // since 1.5

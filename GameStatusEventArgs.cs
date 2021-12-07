@@ -7,9 +7,9 @@ namespace AssettoCorsaSharedMemory
 {
     internal class GameStatusEventArgs : EventArgs
     {
-        public AC_STATUS GameStatus {get; private set;}
+        public STATUS GameStatus {get; private set;}
 
-        public GameStatusEventArgs(AC_STATUS status)
+        public GameStatusEventArgs(STATUS status)
         {
             GameStatus = status;
         }

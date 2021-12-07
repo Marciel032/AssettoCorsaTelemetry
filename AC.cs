@@ -12,23 +12,23 @@ namespace AssettoCorsaSharedMemory
     internal delegate void StaticInfoUpdatedHandler(object sender, StaticInfoEventArgs e);
     internal delegate void GameStatusChangedHandler(object sender, GameStatusEventArgs e);
 
-    internal class AssettoCorsaNotStartedException : Exception
+    internal class ACNotStartedException : Exception
     {
-        public AssettoCorsaNotStartedException()
-            : base("Shared Memory not connected, is Assetto Corsa running and have you run assettoCorsa.Start()?")
+        public ACNotStartedException()
+            : base("Shared Memory not connected, is Assetto Corsa running and have you run aC.Start()?")
         {
         }
     }
 
-    enum AC_MEMORY_STATUS { DISCONNECTED, CONNECTING, CONNECTED }
+    enum MEMORY_STATUS { DISCONNECTED, CONNECTING, CONNECTED }
 
-    internal class AssettoCorsa
+    internal class AC
     {
         private Timer sharedMemoryRetryTimer;
-        private AC_MEMORY_STATUS memoryStatus = AC_MEMORY_STATUS.DISCONNECTED;
-        public bool IsRunning { get { return (memoryStatus == AC_MEMORY_STATUS.CONNECTED); } }
+        private MEMORY_STATUS memoryStatus = MEMORY_STATUS.DISCONNECTED;
+        public bool IsRunning { get { return (memoryStatus == MEMORY_STATUS.CONNECTED); } }
 
-        private AC_STATUS gameStatus = AC_STATUS.AC_OFF;
+        private STATUS gameStatus = STATUS.OFF;
 
         public event GameStatusChangedHandler GameStatusChanged;
         public virtual void OnGameStatusChanged(GameStatusEventArgs e)
@@ -39,15 +39,15 @@ namespace AssettoCorsaSharedMemory
             }
         }
 
-        public static readonly Dictionary<AC_STATUS, string> StatusNameLookup = new Dictionary<AC_STATUS, string>
+        public static readonly Dictionary<STATUS, string> StatusNameLookup = new Dictionary<STATUS, string>
         {
-            { AC_STATUS.AC_OFF, "Off" },
-            { AC_STATUS.AC_LIVE, "Live" },
-            { AC_STATUS.AC_PAUSE, "Pause" },
-            { AC_STATUS.AC_REPLAY, "Replay" },
+            { STATUS.OFF, "Off" },
+            { STATUS.LIVE, "Live" },
+            { STATUS.PAUSE, "Pause" },
+            { STATUS.REPLAY, "Replay" },
         };
 
-        public AssettoCorsa()
+        public AC()
         {
             sharedMemoryRetryTimer = new Timer(2000);
             sharedMemoryRetryTimer.AutoReset = true;
@@ -88,7 +88,7 @@ namespace AssettoCorsaSharedMemory
         {
             try
             {
-                memoryStatus = AC_MEMORY_STATUS.CONNECTING;
+                memoryStatus = MEMORY_STATUS.CONNECTING;
                 // Connect to shared memory
                 physicsMMF = MemoryMappedFile.OpenExisting("Local\\acpmf_physics");
                 graphicsMMF = MemoryMappedFile.OpenExisting("Local\\acpmf_graphics");
@@ -106,7 +106,7 @@ namespace AssettoCorsaSharedMemory
 
                 // Stop retry timer
                 sharedMemoryRetryTimer.Stop();
-                memoryStatus = AC_MEMORY_STATUS.CONNECTED;
+                memoryStatus = MEMORY_STATUS.CONNECTED;
                 return true;
             }
             catch (FileNotFoundException)
@@ -123,7 +123,7 @@ namespace AssettoCorsaSharedMemory
         /// </summary>
         public void Stop()
         {
-            memoryStatus = AC_MEMORY_STATUS.DISCONNECTED;
+            memoryStatus = MEMORY_STATUS.DISCONNECTED;
             sharedMemoryRetryTimer.Stop();
 
             // Stop the timers
@@ -246,7 +246,7 @@ namespace AssettoCorsaSharedMemory
 
         private void ProcessPhysics()
         {
-            if (memoryStatus == AC_MEMORY_STATUS.DISCONNECTED)
+            if (memoryStatus == MEMORY_STATUS.DISCONNECTED)
                 return;
 
             try
@@ -254,13 +254,13 @@ namespace AssettoCorsaSharedMemory
                 Physics physics = ReadPhysics();
                 OnPhysicsUpdated(new PhysicsEventArgs(physics));
             }
-            catch (AssettoCorsaNotStartedException)
+            catch (ACNotStartedException)
             { }
         }
 
         private void ProcessGraphics()
         {
-            if (memoryStatus == AC_MEMORY_STATUS.DISCONNECTED)
+            if (memoryStatus == MEMORY_STATUS.DISCONNECTED)
                 return;
 
             try
@@ -268,13 +268,13 @@ namespace AssettoCorsaSharedMemory
                 Graphics graphics = ReadGraphics();
                 OnGraphicsUpdated(new GraphicsEventArgs(graphics));
             }
-            catch (AssettoCorsaNotStartedException)
+            catch (ACNotStartedException)
             { }
         }
 
         private void ProcessStaticInfo()
         {
-            if (memoryStatus == AC_MEMORY_STATUS.DISCONNECTED)
+            if (memoryStatus == MEMORY_STATUS.DISCONNECTED)
                 return;
 
             try
@@ -282,7 +282,7 @@ namespace AssettoCorsaSharedMemory
                 StaticInfo staticInfo = ReadStaticInfo();
                 OnStaticInfoUpdated(new StaticInfoEventArgs(staticInfo));
             }
-            catch (AssettoCorsaNotStartedException)
+            catch (ACNotStartedException)
             { }
         }
 
@@ -292,8 +292,8 @@ namespace AssettoCorsaSharedMemory
         /// <returns>A Physics object representing the current status, or null if not available</returns>
         public Physics ReadPhysics()
         {
-            if (memoryStatus == AC_MEMORY_STATUS.DISCONNECTED || physicsMMF == null)
-                throw new AssettoCorsaNotStartedException();
+            if (memoryStatus == MEMORY_STATUS.DISCONNECTED || physicsMMF == null)
+                throw new ACNotStartedException();
 
             using (var stream = physicsMMF.CreateViewStream())
             {
@@ -311,8 +311,8 @@ namespace AssettoCorsaSharedMemory
 
         public Graphics ReadGraphics()
         {
-            if (memoryStatus == AC_MEMORY_STATUS.DISCONNECTED || graphicsMMF == null)
-                throw new AssettoCorsaNotStartedException();
+            if (memoryStatus == MEMORY_STATUS.DISCONNECTED || graphicsMMF == null)
+                throw new ACNotStartedException();
 
             using (var stream = graphicsMMF.CreateViewStream())
             {
@@ -330,8 +330,8 @@ namespace AssettoCorsaSharedMemory
 
         public StaticInfo ReadStaticInfo()
         {
-            if (memoryStatus == AC_MEMORY_STATUS.DISCONNECTED || staticInfoMMF == null)
-                throw new AssettoCorsaNotStartedException();
+            if (memoryStatus == MEMORY_STATUS.DISCONNECTED || staticInfoMMF == null)
+                throw new ACNotStartedException();
 
             using (var stream = staticInfoMMF.CreateViewStream())
             {

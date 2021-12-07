@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Timers;
+﻿using System.Timers;
 
 namespace AssettoCorsaSharedMemory
 {
     public delegate void OnTelemetryUpdate(AssettoCorsaTelemetry telemetry);
     public class AssettoCorsaTelemetryReader
     {
-        private readonly AssettoCorsa assettoCorsa;
+        private readonly AC assettoCorsa;
         private readonly AssettoCorsaTelemetry telemetry;
         private readonly object lockControl;
         private readonly Timer updateTimer;
@@ -24,7 +19,7 @@ namespace AssettoCorsaSharedMemory
             lockControl = new object();
             telemetryNeedUpdate = true;
 
-            assettoCorsa = new AssettoCorsa();
+            assettoCorsa = new AC();
             assettoCorsa.GameStatusChanged += AssettoCorsa_GameStatusChanged;
             assettoCorsa.GraphicsUpdated += AssettoCorsa_GraphicsUpdated;
             assettoCorsa.PhysicsUpdated += AssettoCorsa_PhysicsUpdated;
