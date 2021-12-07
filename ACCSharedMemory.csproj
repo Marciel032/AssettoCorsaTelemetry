@@ -7,15 +7,9 @@
     <ProjectGuid>{020AF3ED-0A4C-4215-9B1D-1D41DD26F8BB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-<<<<<<< HEAD:ACCSharedMemory.csproj
     <RootNamespace>ACCSharedMemory</RootNamespace>
     <AssemblyName>ACCSharedMemory</AssemblyName>
-    <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
-=======
-    <RootNamespace>AssettoCorsaSharedMemory</RootNamespace>
-    <AssemblyName>AssettoCorsaSharedMemory</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
->>>>>>> AssettoCorsa:AssettoCorsaTelemetry.csproj
     <FileAlignment>512</FileAlignment>
     <TargetFrameworkProfile />
   </PropertyGroup>
@@ -46,13 +40,9 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-<<<<<<< HEAD:ACCSharedMemory.csproj
-    <Compile Include="ACC.cs" />
-=======
     <Compile Include="AssettoCorsaTelemetry.cs" />
     <Compile Include="AssettoCorsaTelemetryReader.cs" />
-    <Compile Include="AssettoCorsa.cs" />
->>>>>>> AssettoCorsa:AssettoCorsaTelemetry.csproj
+    <Compile Include="ACC.cs" />
     <Compile Include="GameStatusEventArgs.cs" />
     <Compile Include="Graphics.cs" />
     <Compile Include="Physics.cs" />

@@ -5,12 +5,12 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 
-namespace AssettoCorsaSharedMemory
+namespace ACCSharedMemory
 {
     public delegate void OnTelemetryUpdate(AssettoCorsaTelemetry telemetry);
     public class AssettoCorsaTelemetryReader
     {
-        private readonly AssettoCorsa assettoCorsa;
+        private readonly ACC assettoCorsa;
         private readonly AssettoCorsaTelemetry telemetry;
         private readonly object lockControl;
         private readonly Timer updateTimer;
@@ -24,7 +24,7 @@ namespace AssettoCorsaSharedMemory
             lockControl = new object();
             telemetryNeedUpdate = true;
 
-            assettoCorsa = new AssettoCorsa();
+            assettoCorsa = new ACC();
             assettoCorsa.GameStatusChanged += AssettoCorsa_GameStatusChanged;
             assettoCorsa.GraphicsUpdated += AssettoCorsa_GraphicsUpdated;
             assettoCorsa.PhysicsUpdated += AssettoCorsa_PhysicsUpdated;
