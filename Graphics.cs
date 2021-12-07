@@ -125,7 +125,8 @@ namespace ACCSharedMemory
         public int NumberOfLaps;
         [MarshalAs (UnmanagedType.ByValTStr, SizeConst = 33)]
         public String TyreCompound;
-
+        
+        [Obsolete]
         public float ReplayTimeMultiplier;
         public float NormalizedCarPosition;
         public int activeCars;

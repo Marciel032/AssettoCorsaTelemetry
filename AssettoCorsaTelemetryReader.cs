@@ -83,7 +83,7 @@ namespace ACCSharedMemory
                 telemetryNeedUpdate = true;
             }
         }
-
+        
         public void Start() {
             updateTimer.Start();
             assettoCorsa.Start();
