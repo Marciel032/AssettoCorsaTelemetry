@@ -89,7 +89,7 @@ namespace ACCSharedMemory
         ACC_THUNDERSTORM = 5
     }
 
-    public class GraphicsEventArgs : EventArgs
+    internal class GraphicsEventArgs : EventArgs
     {
         public GraphicsEventArgs (Graphics graphics)
         {

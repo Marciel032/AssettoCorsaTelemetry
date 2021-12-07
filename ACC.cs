@@ -1,22 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
 using System.IO.MemoryMappedFiles;
-using System.Linq;
 using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 
 namespace ACCSharedMemory
 {
-    public delegate void PhysicsUpdatedHandler(object sender, PhysicsEventArgs e);
-    public delegate void GraphicsUpdatedHandler(object sender, GraphicsEventArgs e);
-    public delegate void StaticInfoUpdatedHandler(object sender, StaticInfoEventArgs e);
-    public delegate void GameStatusChangedHandler(object sender, GameStatusEventArgs e);
+    internal delegate void PhysicsUpdatedHandler(object sender, PhysicsEventArgs e);
+    internal delegate void GraphicsUpdatedHandler(object sender, GraphicsEventArgs e);
+    internal delegate void StaticInfoUpdatedHandler(object sender, StaticInfoEventArgs e);
+    internal delegate void GameStatusChangedHandler(object sender, GameStatusEventArgs e);
 
-    public class ACCNotStartedException : Exception
+    internal class ACCNotStartedException : Exception
     {
         public ACCNotStartedException()
             : base("Shared Memory not connected, is Assetto Corsa Competizione running and have you run ACC.Start()?")
@@ -26,7 +22,7 @@ namespace ACCSharedMemory
 
     enum AC_MEMORY_STATUS { DISCONNECTED, CONNECTING, CONNECTED }
 
-    public class ACC
+    internal class ACC
     {
         private Timer sharedMemoryRetryTimer;
         private AC_MEMORY_STATUS memoryStatus = AC_MEMORY_STATUS.DISCONNECTED;

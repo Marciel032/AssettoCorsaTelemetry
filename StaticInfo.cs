@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ACCSharedMemory
 {
-    public class StaticInfoEventArgs : EventArgs
+    internal class StaticInfoEventArgs : EventArgs
     {
         public StaticInfoEventArgs (StaticInfo staticInfo)
         {

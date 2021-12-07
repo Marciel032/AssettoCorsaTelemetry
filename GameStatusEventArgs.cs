@@ -5,7 +5,7 @@ using System.Text;
 
 namespace ACCSharedMemory
 {
-    public class GameStatusEventArgs : EventArgs
+    internal class GameStatusEventArgs : EventArgs
     {
         public ACC_STATUS GameStatus {get; private set;}
 

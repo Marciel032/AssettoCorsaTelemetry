@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ACCSharedMemory
 {
-    public class PhysicsEventArgs : EventArgs
+    internal class PhysicsEventArgs : EventArgs
     {
         public PhysicsEventArgs (Physics physics)
         {
