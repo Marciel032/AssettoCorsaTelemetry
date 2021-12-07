@@ -5,7 +5,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AssettoCorsaSharedMemory
+namespace ACCSharedMemory
 {
     public class StaticInfoEventArgs : EventArgs
     {
@@ -22,48 +22,48 @@ namespace AssettoCorsaSharedMemory
     public struct StaticInfo
     {
         [MarshalAs (UnmanagedType.ByValTStr, SizeConst = 15)]
-        public String SMVersion;
+        public String smVersion;
         [MarshalAs (UnmanagedType.ByValTStr, SizeConst = 15)]
-        public String ACVersion;
+        public String acVersion;
 
         // session static info
-        public int NumberOfSessions;
-        public int NumCars;
+        public int numberOfSessions;
+        public int numCars;
         [MarshalAs (UnmanagedType.ByValTStr, SizeConst = 33)]
-        public String CarModel;
+        public String carModel;
         [MarshalAs (UnmanagedType.ByValTStr, SizeConst = 33)]
-        public String Track;
+        public String track;
         [MarshalAs (UnmanagedType.ByValTStr, SizeConst = 33)]
-        public String PlayerName;
+        public String playerName;
         [MarshalAs (UnmanagedType.ByValTStr, SizeConst = 33)]
-        public String PlayerSurname;
+        public String playerSurname;
         [MarshalAs (UnmanagedType.ByValTStr, SizeConst = 33)]
-        public String PlayerNick;
+        public String playerNick;
 
         public int SectorCount;
 
         // car static info
-        public float MaxTorque;
-        public float MaxPower;
-        public int MaxRpm;
-        public float MaxFuel;
+        public float maxTorque;
+        public float maxPower;
+        public int maxRpm;
+        public float maxFuel;
         [MarshalAs (UnmanagedType.ByValArray, SizeConst = 4)]
-        public float[] SuspensionMaxTravel;
+        public float[] suspensionMaxTravel;
         [MarshalAs (UnmanagedType.ByValArray, SizeConst = 4)]
-        public float[] TyreRadius;
+        public float[] tyreRadius;
 
         // since 1.5
         public float MaxTurboBoost;
         public float Deprecated1; // AirTemp since 1.6 in physic
         public float Deprecated2; // RoadTemp since 1.6 in physic
-        public int PenaltiesEnabled;
-        public float AidFuelRate;
-        public float AidTireRate;
-        public float AidMechanicalDamage;
-        public int AidAllowTyreBlankets;
-        public float AidStability;
-        public int AidAutoClutch;
-        public int AidAutoBlip;
+        public int penaltiesEnabled;
+        public float aidFuelRate;
+        public float aidTireRate;
+        public float aidMechanicalDamage;
+        public int AllowTyreBlankets;
+        public float aidStability;
+        public int aidAutoClutch;
+        public int aidAutoBlip;
 
         // since 1.7.1
         public int HasDRS;
@@ -89,5 +89,11 @@ namespace AssettoCorsaSharedMemory
         public int ReversedGridPositions;
         public int PitWindowStart;
         public int PitWindowEnd;
+    
+        public int isOnline;
+        [MarshalAs (UnmanagedType.ByValTStr, SizeConst = 33)]
+        public String dryTyresName;
+        [MarshalAs (UnmanagedType.ByValTStr, SizeConst = 33)]
+        public String wetTyresName;
     }
 }

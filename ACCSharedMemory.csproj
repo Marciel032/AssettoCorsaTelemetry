@@ -7,8 +7,8 @@
     <ProjectGuid>{020AF3ED-0A4C-4215-9B1D-1D41DD26F8BB}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AssettoCorsaSharedMemory</RootNamespace>
-    <AssemblyName>AssettoCorsaSharedMemory</AssemblyName>
+    <RootNamespace>ACCSharedMemory</RootNamespace>
+    <AssemblyName>ACCSharedMemory</AssemblyName>
     <TargetFrameworkVersion>v4.6</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -39,7 +39,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AssettoCorsa.cs" />
+    <Compile Include="ACC.cs" />
     <Compile Include="GameStatusEventArgs.cs" />
     <Compile Include="Graphics.cs" />
     <Compile Include="Physics.cs" />

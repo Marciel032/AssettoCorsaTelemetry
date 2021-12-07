@@ -9,30 +9,30 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Timers;
 
-namespace AssettoCorsaSharedMemory
+namespace ACCSharedMemory
 {
     public delegate void PhysicsUpdatedHandler(object sender, PhysicsEventArgs e);
     public delegate void GraphicsUpdatedHandler(object sender, GraphicsEventArgs e);
     public delegate void StaticInfoUpdatedHandler(object sender, StaticInfoEventArgs e);
     public delegate void GameStatusChangedHandler(object sender, GameStatusEventArgs e);
 
-    public class AssettoCorsaNotStartedException : Exception
+    public class ACCNotStartedException : Exception
     {
-        public AssettoCorsaNotStartedException()
-            : base("Shared Memory not connected, is Assetto Corsa running and have you run assettoCorsa.Start()?")
+        public ACCNotStartedException()
+            : base("Shared Memory not connected, is Assetto Corsa Competizione running and have you run ACC.Start()?")
         {
         }
     }
 
     enum AC_MEMORY_STATUS { DISCONNECTED, CONNECTING, CONNECTED }
 
-    public class AssettoCorsa
+    public class ACC
     {
         private Timer sharedMemoryRetryTimer;
         private AC_MEMORY_STATUS memoryStatus = AC_MEMORY_STATUS.DISCONNECTED;
         public bool IsRunning { get { return (memoryStatus == AC_MEMORY_STATUS.CONNECTED); } }
 
-        private AC_STATUS gameStatus = AC_STATUS.AC_OFF;
+        private ACC_STATUS gameStatus = ACC_STATUS.ACC_OFF;
 
         public event GameStatusChangedHandler GameStatusChanged;
         public virtual void OnGameStatusChanged(GameStatusEventArgs e)
@@ -43,15 +43,15 @@ namespace AssettoCorsaSharedMemory
             }
         }
 
-        public static readonly Dictionary<AC_STATUS, string> StatusNameLookup = new Dictionary<AC_STATUS, string>
+        public static readonly Dictionary<ACC_STATUS, string> StatusNameLookup = new Dictionary<ACC_STATUS, string>
         {
-            { AC_STATUS.AC_OFF, "Off" },
-            { AC_STATUS.AC_LIVE, "Live" },
-            { AC_STATUS.AC_PAUSE, "Pause" },
-            { AC_STATUS.AC_REPLAY, "Replay" },
+            { ACC_STATUS.ACC_OFF, "Off" },
+            { ACC_STATUS.ACC_LIVE, "Live" },
+            { ACC_STATUS.ACC_PAUSE, "Pause" },
+            { ACC_STATUS.ACC_REPLAY, "Replay" },
         };
 
-        public AssettoCorsa()
+        public ACC()
         {
             sharedMemoryRetryTimer = new Timer(2000);
             sharedMemoryRetryTimer.AutoReset = true;
@@ -73,6 +73,20 @@ namespace AssettoCorsaSharedMemory
             StaticInfoInterval = 1000;
 
             Stop();
+        }
+
+        public float[,] TranslateCarCoordinates (float[] carCoordinates)
+        {
+            float[,] retArray = new float[60,3];
+
+            for(int i=2; i<carCoordinates.Length ; i = i+3)
+            {
+                retArray[i/3, 0] = carCoordinates[i-2];
+                retArray[i/3, 1] = carCoordinates[i-1];
+                retArray[i/3, 2] = carCoordinates[i];
+            }
+
+            return retArray;
         }
 
         /// <summary>
@@ -258,7 +272,7 @@ namespace AssettoCorsaSharedMemory
                 Physics physics = ReadPhysics();
                 OnPhysicsUpdated(new PhysicsEventArgs(physics));
             }
-            catch (AssettoCorsaNotStartedException)
+            catch (ACCNotStartedException)
             { }
         }
 
@@ -272,7 +286,7 @@ namespace AssettoCorsaSharedMemory
                 Graphics graphics = ReadGraphics();
                 OnGraphicsUpdated(new GraphicsEventArgs(graphics));
             }
-            catch (AssettoCorsaNotStartedException)
+            catch (ACCNotStartedException)
             { }
         }
 
@@ -286,7 +300,7 @@ namespace AssettoCorsaSharedMemory
                 StaticInfo staticInfo = ReadStaticInfo();
                 OnStaticInfoUpdated(new StaticInfoEventArgs(staticInfo));
             }
-            catch (AssettoCorsaNotStartedException)
+            catch (ACCNotStartedException)
             { }
         }
 
@@ -297,7 +311,7 @@ namespace AssettoCorsaSharedMemory
         public Physics ReadPhysics()
         {
             if (memoryStatus == AC_MEMORY_STATUS.DISCONNECTED || physicsMMF == null)
-                throw new AssettoCorsaNotStartedException();
+                throw new ACCNotStartedException();
 
             using (var stream = physicsMMF.CreateViewStream())
             {
@@ -316,7 +330,7 @@ namespace AssettoCorsaSharedMemory
         public Graphics ReadGraphics()
         {
             if (memoryStatus == AC_MEMORY_STATUS.DISCONNECTED || graphicsMMF == null)
-                throw new AssettoCorsaNotStartedException();
+                throw new ACCNotStartedException();
 
             using (var stream = graphicsMMF.CreateViewStream())
             {
@@ -335,7 +349,7 @@ namespace AssettoCorsaSharedMemory
         public StaticInfo ReadStaticInfo()
         {
             if (memoryStatus == AC_MEMORY_STATUS.DISCONNECTED || staticInfoMMF == null)
-                throw new AssettoCorsaNotStartedException();
+                throw new ACCNotStartedException();
 
             using (var stream = staticInfoMMF.CreateViewStream())
             {

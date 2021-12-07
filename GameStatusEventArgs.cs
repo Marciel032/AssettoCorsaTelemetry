@@ -3,13 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace AssettoCorsaSharedMemory
+namespace ACCSharedMemory
 {
     public class GameStatusEventArgs : EventArgs
     {
-        public AC_STATUS GameStatus {get; private set;}
+        public ACC_STATUS GameStatus {get; private set;}
 
-        public GameStatusEventArgs(AC_STATUS status)
+        public GameStatusEventArgs(ACC_STATUS status)
         {
             GameStatus = status;
         }
